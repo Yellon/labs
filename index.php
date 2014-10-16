@@ -58,7 +58,7 @@ foreach ( $settings['exclude_dirs'] as $exclude ) {
 			<?php foreach(  $dirs as $dir ): 
 				$lab_data = json_decode(file_get_contents($dir.'/'.$settings['spec_file']));  ?>
 				<li>
-					<h2><a href="<?= $dir ?>"><?= $lab_data->name ?></a></h2>
+					<h2><a href="<?= $dir ?>"><?= $lab_data->name || $dir ?></a></h2>
 					<p><?= $lab_data->description ?></p>
 				</li>
 			<?php endforeach; ?>
