@@ -55,11 +55,15 @@ foreach ( $settings['exclude_dirs'] as $exclude ) {
 	<div class="wrapper">
 		<h1>Yellon Labs</h1>
 		<ul>
-			<?php foreach(  $dirs as $dir ): 
-				$lab_data = json_decode(file_get_contents($dir.'/'.$settings['spec_file']));  ?>
+			<?php foreach(  $dirs as $dir ):
+				$has_spec = file_exists($dir.'/'.$settings['spec_file']);
+				$lab_data = $has_spec ? json_decode(file_get_contents($dir.'/'.$settings['spec_file'])) : false; 
+				$title = $lab_data && $lab_data->name ? $lab_data->name : $dir;  ?>
 				<li>
-					<h2><a href="<?= $dir ?>"><?= $lab_data->name || $dir ?></a></h2>
-					<p><?= $lab_data->description ?></p>
+					<h2><a href="<?= $dir ?>"><?= $title ?></a></h2>
+					<?php if( isset($lab_data->description) ): ?>
+						<p><?= $lab_data->description ?></p>
+					<?php endif; ?>
 				</li>
 			<?php endforeach; ?>
 		</ul>
